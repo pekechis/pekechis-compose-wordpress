@@ -1,0 +1,66 @@
+version: '3'
+services:
+  
+  #-------------------------------------------------------------------------
+  # SERVICIO SERVIDOR WEB (php:7.4-apache con mysqli y código WP descargado
+  #-------------------------------------------------------------------------
+  web:
+    # IMAGEN USADA
+    image: jperjim398/miwp
+    # NOMBRE QUE LE VOY A DAR AL CONTENEDOR
+    container_name: web
+    # REDIRECCIÓN DE PUERTOS
+    ports:
+      - 8181:80     
+    # SERVICIOS QUE TIENEN QUE ARRANCAR ANTES DE ARRANCAR ESTE
+    depends_on:
+     - datos
+    # REDES A USAR
+    networks:
+      - ejemplo
+  
+  #--------------------------------------------------
+  # SERVICIO SERVIDOR DE BASE DE DATOS MARIADB
+  #--------------------------------------------------
+
+  # NOMBRE DEL SERVICIO
+  datos:
+    # IMAGEN USADA
+    image: mariadb
+    # NOMBRE QUE LE VOY A DAR AL CONTENEDOR
+    container_name: bd
+    # LISTA DE VALORES DE ENTORNO CON SUS VALORES
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: pepe
+      MYSQL_PASSWORD: pepe
+    # REDIRECCIÓN DE PUERTOS
+    ports:
+      - 3316:3306
+    # VOLÚMENES A USAR POR EL CONTENEDOR
+    volumes:
+      # DOCKER VOLUME
+      - data:/var/lib/mysql
+    # REDES A USAR
+    networks:
+      - ejemplo
+
+# DEFINICIÓN DE VOLÚMENES DOCKER A USAR POR LOS SERVICIOS (OPCIONAL)
+volumes:
+  data:
+    # TIPO DE DRIVER
+    driver: local
+
+# DEFINICIÓN DE LAS REDES A USAR POR LOS SERVICIOS (OPCIONAL)
+networks:
+  # NOMBRE DE LA RED
+  ejemplo:
+    # DRIVER DE LA RED
+    driver: bridge
+    ipam:
+      driver: default
+      config:         
+        - subnet: 172.20.0.0/16
+
+  
