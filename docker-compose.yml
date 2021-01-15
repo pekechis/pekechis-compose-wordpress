@@ -1,10 +1,9 @@
 version: '3'
-services:
-  
-  #-------------------------------------------------------------------------
-  # SERVICIO SERVIDOR WEB (php:7.4-apache con mysqli y código WP descargado
-  #-------------------------------------------------------------------------
-  web:
+services:  
+  #--------------------------------------------------------------------------
+  # SERVICIO SERVIDOR WEB (php:7.4-apache con mysqli y código WP descargado)
+  #--------------------------------------------------------------------------
+web:
     # IMAGEN USADA
     image: jperjim398/miwp
     # NOMBRE QUE LE VOY A DAR AL CONTENEDOR
@@ -17,11 +16,11 @@ services:
      - datos
     # REDES A USAR
     networks:
-      - ejemplo
+      - ejemplo    
   
-  #--------------------------------------------------
+  #---------------------------------------------------
   # SERVICIO SERVIDOR DE BASE DE DATOS MARIADB
-  #--------------------------------------------------
+  #---------------------------------------------------
 
   # NOMBRE DEL SERVICIO
   datos:
@@ -62,5 +61,3 @@ networks:
       driver: default
       config:         
         - subnet: 172.20.0.0/16
-
-  
